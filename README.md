@@ -116,9 +116,9 @@ The application uses the `Graphviz` library to generate ER diagrams from the upl
 
 ## Query Modes
 
-1. **LangChain RAG:** Uses the LangChain library to generate SQL based on natural language input.
-2. **Manual FAISS RAG:** Uses FAISS to retrieve relevant columns and tables for SQL generation.
-3. **No RAG (Schema Only):** Directly generates SQL from the schema without using RAG techniques.
+* **LangChain RAG**: Uses LangChain to efficiently retrieve top-k schema elements via FAISS and generate SQL using an LLM (Gemini), providing modularity, prompt flexibility, and easier experimentation.
+* **Manual FAISS RAG**: Directly uses FAISS for top-k retrieval and constructs a prompt for Gemini manually, offering control but requiring more code.
+* **No RAG (Schema Only)**: Generates SQL using the full schema directly, without any retrieval, which can cause hallucination and irrelevant joins in complex schemas.
 
 ---
 
