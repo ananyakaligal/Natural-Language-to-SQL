@@ -1,12 +1,21 @@
-app.py
-app2.py
-app3.py
-app5.py
-app6_lan.py
-app7.py
-available.py
-csvtodb.py
-.env
+# Ignore the virtual environment
+venv/
 
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
 
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore VSCode settings (if using VSCode)
+.vscode/
+
+# Ignore environment variables and config
 .env
+*.env
+
+# Ignore logs and output
+*.log
+
