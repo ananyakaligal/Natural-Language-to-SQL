@@ -1,0 +1,34 @@
+import faiss
+import os
+import pickle
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+model = SentenceTransformer("all-MiniLM-L6-v2")
+index_path = "vectorstore/schema_index.faiss"
+meta_path = "vectorstore/schema_meta.pkl"
+
+def build_or_load_index(schema_dict):
+    if os.path.exists(index_path) and os.path.exists(meta_path):
+        index = faiss.read_index(index_path)
+        with open(meta_path, "rb") as f:
+            metadata = pickle.load(f)
+        return index, metadata
+
+    texts, metadata = [], []
+    for table, cols in schema_dict.items():
+        for col in cols:
+            desc = f"{table} - {col}"
+            texts.append(desc)
+            metadata.append({"table": table, "column": col})
+
+    embeddings = model.encode(texts)
+    index = faiss.IndexFlatL2(len(embeddings[0]))
+    index.add(np.array(embeddings).astype("float32"))
+
+    os.makedirs("vectorstore", exist_ok=True)
+    faiss.write_index(index, index_path)
+    with open(meta_path, "wb") as f:
+        pickle.dump(metadata, f)
+
+    return index, metadata

@@ -1,0 +1,11 @@
+streamlit
+openai
+faiss-cpu
+sentence-transformers
+python-dotenv
+sqlalchemy
+psycopg2-binary
+pymysql
+pandas
+graphviz
+google-generativeai
