@@ -37,8 +37,8 @@ Text-to-SQL RAG App/
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/Bindhu-T-Devidas/Text-to-SQL-RAG.git
-   cd Text-to-SQL-RAG
+   git clone https://github.com/Bindhu-T-Devidas/Natural-Language-to-SQL.git
+   cd Natural-Language-to-SQL
    ```
 
 2. **Install Dependencies:**
