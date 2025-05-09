@@ -5,6 +5,7 @@ venv_name/
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyc
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -19,3 +20,4 @@ __pycache__/
 # Ignore logs and output
 *.log
 
+# .gitignore
