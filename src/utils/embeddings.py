@@ -5,8 +5,8 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
-index_path = "vectorstore/schema_index.faiss"
-meta_path = "vectorstore/schema_meta.pkl"
+index_path = "../vectorstore/schema_index.faiss"
+meta_path = "../vectorstore/schema_meta.pkl"
 
 def build_or_load_index(schema_dict):
     if os.path.exists(index_path) and os.path.exists(meta_path):
