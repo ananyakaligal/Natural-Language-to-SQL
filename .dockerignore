@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+*.pkl           # if you want to rebuild vectorstore inside container
+.env
+venv_name
