@@ -6,7 +6,7 @@ import os
 from sqlalchemy import create_engine
 
 from utils.schema_extractor import extract_schema_sqlite, extract_schema_rdbms
-from utils.vector_store import build_or_load_index
+from utils.embeddings import build_or_load_index
 from utils.llm_sql_generator import generate_sql_from_prompt, generate_sql_schema_only
 from langchain_sql_pipeline import generate_sql_with_langchain
 from utils.er_diagram import render_er_diagram

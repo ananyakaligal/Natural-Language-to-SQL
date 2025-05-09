@@ -20,7 +20,7 @@ This application leverages **Retrieval-Augmented Generation (RAG)** to convert n
 
 ```
 Text-to-SQL RAG App/
-├── app7.py                     # Main Streamlit app
+├── app.py                     # Main Streamlit app
 ├── requirements.txt            # Dependencies list
 ├── utils/                      # Utility scripts
 │   ├── er_diagram.py           # ER diagram generator
@@ -63,7 +63,7 @@ Text-to-SQL RAG App/
 1. **Run the Streamlit App:**
 
    ```bash
-   streamlit run app7.py
+   streamlit run app.py
    ```
 
 2. **Upload a Database:**
