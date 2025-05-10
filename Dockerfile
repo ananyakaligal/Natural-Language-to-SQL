@@ -25,10 +25,7 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 COPY . .
 
 ENV STREAMLIT_SERVER_HEADLESS=true \
-    STREAMLIT_SERVER_PORT=10000 \
     STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
     STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
-EXPOSE 10000
-
-CMD ["sh", "-c", "streamlit run src/app.py --server.port=${PORT:-10000} --server.address=0.0.0.0"]
+CMD streamlit run src/app.py --server.port=$PORT --server.address=0.0.0.0
