@@ -5,8 +5,13 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
-index_path = "../vectorstore/schema_index.faiss"
-meta_path = "../vectorstore/schema_meta.pkl"
+
+# Always compute the vectorstore directory relative to this file
+vectorstore_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../vectorstore"))
+os.makedirs(vectorstore_dir, exist_ok=True)
+
+index_path = os.path.join(vectorstore_dir, "schema_index.faiss")
+meta_path = os.path.join(vectorstore_dir, "schema_meta.pkl")
 
 def build_or_load_index(schema_dict):
     if os.path.exists(index_path) and os.path.exists(meta_path):
@@ -26,7 +31,7 @@ def build_or_load_index(schema_dict):
     index = faiss.IndexFlatL2(len(embeddings[0]))
     index.add(np.array(embeddings).astype("float32"))
 
-    os.makedirs("vectorstore", exist_ok=True)
+    # Directory is already ensured above
     faiss.write_index(index, index_path)
     with open(meta_path, "wb") as f:
         pickle.dump(metadata, f)
