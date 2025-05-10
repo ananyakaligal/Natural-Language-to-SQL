@@ -1,40 +1,39 @@
 # syntax=docker/dockerfile:1
 
-### 1) Builder stage ###
+### ---- Builder Stage ---- ###
 FROM python:3.10-slim AS builder
 
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-      build-essential sqlite3 libpq-dev default-libmysqlclient-dev \
+# Install dependencies for building Python packages and DB support
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential sqlite3 libpq-dev default-libmysqlclient-dev \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy & install pinned deps
+# Install Python dependencies
 COPY requirements.txt .
-RUN pip install --upgrade pip \
- && pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Copy your application code
+# Copy full app source code
 COPY . .
 
-### 2) Final image ###
+### ---- Final Image ---- ###
 FROM python:3.10-slim
 
 WORKDIR /app
 
-# Copy installed packages from builder
+# Copy installed packages and app code from builder
 COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
-
-# Copy app code
 COPY . .
 
+# Let Render handle dynamic port via $PORT
 ENV STREAMLIT_SERVER_HEADLESS=true \
     STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
     STREAMLIT_SERVER_ENABLE_CORS=false \
     STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false
 
-EXPOSE $PORT
+EXPOSE 8080
 
-CMD ["streamlit", "run", "src/app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
+# ✅ Use shell so $PORT is expanded at runtime
+CMD ["sh", "-c", "streamlit run src/app.py --server.port=$PORT --server.address=0.0.0.0"]
