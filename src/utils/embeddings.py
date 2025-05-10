@@ -15,11 +15,13 @@ meta_path = os.path.join(vectorstore_dir, "schema_meta.pkl")
 
 def build_or_load_index(schema_dict):
     if os.path.exists(index_path) and os.path.exists(meta_path):
+        print("🔄 Loading FAISS index and metadata from disk...")
         index = faiss.read_index(index_path)
         with open(meta_path, "rb") as f:
             metadata = pickle.load(f)
         return index, metadata
 
+    print("⚡ Building new FAISS index and metadata (cold start)...")
     texts, metadata = [], []
     for table, cols in schema_dict.items():
         for col in cols:
