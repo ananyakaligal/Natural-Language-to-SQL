@@ -38,4 +38,4 @@ ENV STREAMLIT_SERVER_HEADLESS=true \
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "src/app.py"]
+CMD ["streamlit", "run", "src/app.py", "--server.port=8080", "--server.address=0.0.0.0"]
