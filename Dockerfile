@@ -34,4 +34,5 @@ ENV STREAMLIT_SERVER_HEADLESS=true \
 EXPOSE 8080
 
 # Use $PORT injected by Render
-CMD ["streamlit", "run", "src/app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
+CMD streamlit run src/app.py --server.port=$PORT --server.address=0.0.0.0
+
