@@ -2,9 +2,11 @@ services:
   - type: web
     name: askyourdb
     env: docker
-    plan: free
     dockerfilePath: ./Dockerfile
+    plan: free
     envVars:
-      - fromDotEnv: true
+      - key: GEMINI_API_KEY
+        fromDotEnv: true
+    healthCheckPath: /
     ports:
       - 8080
