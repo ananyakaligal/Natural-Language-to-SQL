@@ -28,6 +28,8 @@ ENV STREAMLIT_SERVER_HEADLESS=true \
     STREAMLIT_SERVER_ENABLE_CORS=false \
     STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false
 
-EXPOSE 8080
-CMD streamlit run src/app.py --server.port=8080 --server.address=0.0.0.0
+# Let Render know we plan to bind to the port it injects
+EXPOSE 10000
 
+# ✅ This is the correct way: use the port Render gives us
+CMD sh -c "streamlit run src/app.py --server.port=\${PORT:-8501} --server.address=0.0.0.0"
