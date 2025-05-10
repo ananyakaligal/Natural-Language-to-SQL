@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: askyourdb
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - fromDotEnv: true
+    ports:
+      - 8080
