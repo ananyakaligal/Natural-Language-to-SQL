@@ -36,4 +36,4 @@ ENV STREAMLIT_SERVER_HEADLESS=true \
 EXPOSE 8080
 
 # ✅ Use shell so $PORT is expanded at runtime
-CMD ["sh", "-c", "streamlit run src/app.py --server.port=$PORT --server.address=0.0.0.0"]
+CMD ["streamlit", "run", "src/app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
