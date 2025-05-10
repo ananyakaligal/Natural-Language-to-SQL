@@ -31,4 +31,4 @@ ENV STREAMLIT_SERVER_HEADLESS=true \
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "streamlit run src/app.py --server.port=${PORT:-10000} --server.address=0.0.0.0"]
+CMD sh -c "streamlit run src/app.py --server.port=${PORT:-8501} --server.address=0.0.0.0"
