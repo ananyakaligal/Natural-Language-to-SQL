@@ -30,12 +30,11 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 # Copy app code
 COPY . .
 
-# Streamlit settings
+# Use Render’s default port
 ENV STREAMLIT_SERVER_HEADLESS=true \
-    STREAMLIT_SERVER_ENABLE_CORS=false \
-    STREAMLIT_SERVER_PORT=8080 \
-    STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
+    STREAMLIT_SERVER_PORT=$PORT
 
-EXPOSE 8080
+EXPOSE $PORT
 
-CMD ["streamlit", "run", "src/app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "src/app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
