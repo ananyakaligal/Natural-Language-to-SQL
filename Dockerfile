@@ -1,31 +1,27 @@
-# syntax=docker/dockerfile:1
+# at the very top of your Dockerfile:
+# enable BuildKit features
+# syntax=docker/dockerfile:1.4
 
 FROM python:3.10-slim AS builder
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl build-essential sqlite3 libpq-dev default-libmysqlclient-dev gnupg \
-    gcc python3-dev libpq-dev \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 
+# copy only requirements, so they’re cached separately
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# use a pip cache mount (requires DOCKER_BUILDKIT=1)
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
 
 FROM python:3.10-slim
-
 WORKDIR /app
-
 COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
+COPY --from=builder /usr/local/bin           /usr/local/bin
 COPY . .
 
-ENV STREAMLIT_SERVER_HEADLESS=true \
-    STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
-    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+ENV PYTHONPATH=/app/src \
+    STREAMLIT_SERVER_HEADLESS=true \
+    STREAMLIT_SERVER_ENABLE_CORS=false \
+    STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
-CMD streamlit run src/app.py --server.port=$PORT --server.address=0.0.0.0
+EXPOSE 10000
+CMD sh -c "streamlit run src/app.py --server.port \$PORT --server.address 0.0.0.0"
