@@ -16,10 +16,7 @@ ENV PYTHONPATH=/app/src \
     STREAMLIT_SERVER_ENABLE_CORS=false \
     STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
-# 4) Tell Docker / Streamlit what port to expect
-EXPOSE 8000
-
-# 5) Run via shell form so $PORT expands
+# 4) Run via shell form so $PORT expands
 CMD sh -c "streamlit run src/app.py \
     --server.port \$PORT \
     --server.address 0.0.0.0"
