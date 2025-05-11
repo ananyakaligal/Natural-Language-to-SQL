@@ -7,7 +7,6 @@ services:
     autoDeploy: true
     healthCheckPath: /
     envVars:
-      # Render will automatically inject a PORT var, so you don't need to set it yourself
       - key: STREAMLIT_SERVER_HEADLESS
         value: "true"
       - key: STREAMLIT_SERVER_ENABLE_CORS
